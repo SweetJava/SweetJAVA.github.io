@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Posts on Eriri`s Blog</title>
+    <link>https://sweetjava.github.io/posts/</link>
+    <description>Recent content in Posts on Eriri`s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Mon, 05 Aug 2019 20:56:47 +0800</lastBuildDate><atom:link href="https://sweetjava.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Use the free Victoria program to test and fix your hard drive</title>
+      <link>https://sweetjava.github.io/2019/use-the-free-victoria-program-to-test-and-fix-your-hard-drive/</link>
+      <pubDate>Mon, 05 Aug 2019 20:56:47 +0800</pubDate>
+      
+      <guid>https://sweetjava.github.io/2019/use-the-free-victoria-program-to-test-and-fix-your-hard-drive/</guid>
+      <description>Use the free Victoria program to test and fix your hard drive Victoria — free hard drive test and repair program is a useful and versatile tool for testing and fixing all kinds of hard drive errors. We will analyze its functions, features and basic capabilities below.
+Content:  Victoria capabilities Getting started with Victoria Description of tabs How can I quickly diagnose a drive? Other important S.M.A.R.T. points you should know about Testing the drive and fixing errors “Erase” and “Write” functions  Not only ease of use and speed, but also the security of stored information depends on the correct operation of each component of the computer.</description>
+    </item>
+    
+    <item>
+      <title>网课摸鱼神器——OBS虚拟摄像头</title>
+      <link>https://sweetjava.github.io/2018/%E7%BD%91%E8%AF%BE%E6%91%B8%E9%B1%BC%E7%A5%9E%E5%99%A8obs%E8%99%9A%E6%8B%9F%E6%91%84%E5%83%8F%E5%A4%B4/</link>
+      <pubDate>Sun, 05 Aug 2018 20:56:47 +0800</pubDate>
+      
+      <guid>https://sweetjava.github.io/2018/%E7%BD%91%E8%AF%BE%E6%91%B8%E9%B1%BC%E7%A5%9E%E5%99%A8obs%E8%99%9A%E6%8B%9F%E6%91%84%E5%83%8F%E5%A4%B4/</guid>
+      <description>网课摸鱼神器——OBS虚拟摄像头 **说明：**OBS全称Open Broadcaster Software，是一个免费开源的视频录制和直播串流软件，它最广泛的用途是</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>https://sweetjava.github.io/1/how-to-install-an-ftp-server-vsftpd-on-ubuntu-20.04/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://sweetjava.github.io/1/how-to-install-an-ftp-server-vsftpd-on-ubuntu-20.04/</guid>
+      <description>How To Install an FTP server (vsftpd) on Ubuntu 20.04 Last updated on May 24th, 2020
+In this guide we will install and configure vsftpd (Very Secure File Transfer Protocol Daemon) on Ubuntu 20.04. We will also set up an FTP user and optionally configure FTPS for secure file transfers.
+Before you begin… It’s surprising how many web developers are still unaware of SFTP and the advantages over FTP/FTPS. SFTP comes with Linux Server preinstalled and works just like normal FTP, but is more secure and less hassle to set up.</description>
+    </item>
+    
+  </channel>
+</rss>

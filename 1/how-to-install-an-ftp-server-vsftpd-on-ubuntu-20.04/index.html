@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+    <head>
+    <meta http-equiv="content-type" content="text/html;charset=utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noodp"/>
+    <meta name="author" content="Eriri">
+    
+    
+    
+    
+    <link rel="next" href="https://sweetjava.github.io/2018/%E7%BD%91%E8%AF%BE%E6%91%B8%E9%B1%BC%E7%A5%9E%E5%99%A8obs%E8%99%9A%E6%8B%9F%E6%91%84%E5%83%8F%E5%A4%B4/" />
+    <link rel="canonical" href="https://sweetjava.github.io/1/how-to-install-an-ftp-server-vsftpd-on-ubuntu-20.04/" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
+    <title>
+        
+        
+             | Eriri`s Blog
+        
+    </title>
+    <meta name="title" content=" | Eriri`s Blog">
+    
+<link rel="stylesheet" href="/css/main.min.css">
+
+
+    
+    
+ 
+
+<script type="application/ld+json">
+{
+    "@context" : "http://schema.org",
+    "@type" : "BlogPosting",
+    "mainEntityOfPage": {
+         "@type": "WebPage",
+         "@id": "https:\/\/sweetjava.github.io\/"
+    },
+    "articleSection" : "posts",
+    "name" : "",
+    "headline" : "",
+    "description" : "How To Install an FTP server (vsftpd) on Ubuntu 20.04 Last updated on May 24th, 2020\nIn this guide we will install and configure vsftpd (Very Secure File Transfer Protocol Daemon) on Ubuntu 20.04. We will also set up an FTP user and optionally configure FTPS for secure file transfers.\nBefore you begin… It’s surprising how many web developers are still unaware of SFTP and the advantages over FTP\/FTPS. SFTP comes with Linux Server preinstalled and works just like normal FTP, but is more secure and less hassle to set up.",
+    "inLanguage" : "zh-cn",
+    "author" : "Eriri",
+    "creator" : "Eriri",
+    "publisher": "Eriri",
+    "accountablePerson" : "Eriri",
+    "copyrightHolder" : "Eriri",
+    "copyrightYear" : "0001",
+    "datePublished": "0001-01-01 00:00:00 \u002b0000 UTC",
+    "dateModified" : "0001-01-01 00:00:00 \u002b0000 UTC",
+    "url" : "https:\/\/sweetjava.github.io\/1\/how-to-install-an-ftp-server-vsftpd-on-ubuntu-20.04\/",
+    "wordCount" : "1626",
+    "keywords" : [  "Eriri`s Blog"]
+}
+</script>
+
+  </head>
+    <body class="">
+        <div class="wrapper">
+            <nav class="navbar">
+    
+        <progress class="content_progress" max="0" value="0"></progress>
+    
+    <div class="container">
+        
+            <div class="navbar-header header-back2home-logo">
+                <span class="logo_mark" >>$</span>
+                <a href="https://sweetjava.github.io/">
+                    <span class="logo_text" >cd /home/</span>
+                    <span class="logo_cursor" ></span>
+                </a>
+            </div>
+        
+        <div class="navbar-right">
+                
+                <span class="menu">
+                
+                <a class="menu-item" href="/posts/" title="">Blog</a>
+                
+                <a class="menu-item" href="/categories/" title="">Categories</a>
+                
+                <a class="menu-item" href="/tags/" title="">Tags</a>
+                
+                <a class="menu-item" href="/about/" title="">About</a>
+                
+                <span class="divide"></span>
+                <a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-dark-mode"></i></a>
+                </span>
+        </div>
+    </div>
+</nav>
+<nav class="navbar-mobile" id="nav-mobile" style="display: none">
+    
+        <progress class="content_progress" max="0" value="0"></progress>
+    
+     <div class="container">
+        <div class="navbar">
+            <div class="navbar-header header-logo">
+                    <a href="https://sweetjava.github.io/">Eriri`s Blog</a>
+            </div>
+            <div class="navbar-right">
+                <div><a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-dark-mode"></i></a></div>
+                <div class="menu-toggle">
+                    <span></span><span></span><span></span>
+                </div>
+            </div>
+        </div>
+     
+          <div class="menu" id="mobile-menu">
+                <nav class="mb-md">
+                    
+                    
+                        <a class="menu-item" href="/posts/" title="">
+                            <h3>Blog</h3>
+                            <div class="menu-active"></div>
+                        </a>
+                    
+                        <a class="menu-item" href="/categories/" title="">
+                            <h3>Categories</h3>
+                            <div class="menu-active"></div>
+                        </a>
+                    
+                        <a class="menu-item" href="/tags/" title="">
+                            <h3>Tags</h3>
+                            <div class="menu-active"></div>
+                        </a>
+                    
+                        <a class="menu-item" href="/about/" title="">
+                            <h3>About</h3>
+                            <div class="menu-active"></div>
+                        </a>
+                    
+                </nav>
+        </div>
+    </div>
+</nav>
+            <main class="main">
+                <div class="container">
+                    
+<article class="post-warp" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+        <h1 class="post-title" itemprop="name headline"></h1>
+        <div class="post-meta">
+                Written by <a itemprop="name" href="https://sweetjava.github.io/" rel="author">Eriri</a> with ♥
+                <span class="post-time">
+                on <time datetime=0001-01-01 itemprop="datePublished">January 1, 0001</time>
+                </span>
+                in
+                
+                <span class="post-word-count">1626 words</span>
+        </div>
+    </header>
+
+    <div class="post-content">
+        
+
+        
+        
+            
+        
+
+        
+        
+        
+        
+        
+
+        
+        
+        
+
+        <h1 id="how-to-install-an-ftp-server-vsftpd-on-ubuntu-2004">How To Install an FTP server (vsftpd) on Ubuntu 20.04</h1>
+<p>Last updated on May 24th, 2020</p>
+<p>In this guide we will install and configure vsftpd (Very Secure File Transfer Protocol Daemon) on Ubuntu 20.04. We will also set up an FTP user and optionally configure FTPS for secure file transfers.</p>
+<h2 id="before-you-begin">Before you begin…</h2>
+<p>It’s surprising how many web developers are still unaware of SFTP and the advantages over FTP/FTPS. SFTP comes with Linux Server preinstalled and works just like normal FTP, but is more secure and less hassle to set up. If your FTP client supports SFTP, you should use it!</p>
+<ul>
+<li><a href="https://devanswers.co/configure-sftp-web-server-document-root/">How to configure SFTP for a web server document root</a></li>
+</ul>
+<h2 id="1-install-vsftpd">1. Install vsftpd</h2>
+<p>Let’s begin by updating the package lists and installing vsftpd on Ubuntu 20.04.</p>
+<p>Below we have two commands separated by <code>&amp;&amp;</code>. The first command will update the package lists to ensure you get the latest version and dependencies for vsftpd. The second command will then download and install vsftpd. Press <code>y</code> and <code>ENTER</code> when asked to continue.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo apt update <span style="color:#f92672">&amp;&amp;</span> sudo apt install vsftpd
+</code></pre></div><p>Once installed, check the status of vsftpd</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo service vsftpd status
+● vsftpd.service - vsftpd FTP server
+     Loaded: loaded <span style="color:#f92672">(</span>/lib/systemd/system/vsftpd.service; enabled; vendor preset: enabled<span style="color:#f92672">)</span>
+     Active: active <span style="color:#f92672">(</span>running<span style="color:#f92672">)</span> since Mon 2020-04-27 19:35:30 IST; 13s ago
+   Main PID: <span style="color:#ae81ff">54532</span> <span style="color:#f92672">(</span>vsftpd<span style="color:#f92672">)</span>
+      Tasks: <span style="color:#ae81ff">1</span> <span style="color:#f92672">(</span>limit: 1137<span style="color:#f92672">)</span>
+     Memory: 652.0K
+     CGroup: /system.slice/vsftpd.service
+             └─54532 /usr/sbin/vsftpd /etc/vsftpd.conf
+
+Apr <span style="color:#ae81ff">27</span> 19:35:30 ubuntu systemd<span style="color:#f92672">[</span>1<span style="color:#f92672">]</span>: Starting vsftpd FTP server...
+Apr <span style="color:#ae81ff">27</span> 19:35:30 ubuntu systemd<span style="color:#f92672">[</span>1<span style="color:#f92672">]</span>: Started vsftpd FTP server.
+</code></pre></div><p>Above we can see our FTP server is now up and running.</p>
+<h2 id="2-configure-firewall">2. Configure Firewall</h2>
+<p>If you haven’t already done so, it is recommended that you enable the <code>ufw</code> firewall for Ubuntu 20.04. Before enabling <code>ufw</code> firewall, make sure you add a rule for SSH, otherwise you may get locked out of your server if you’re connected remotely. If you don’t want to set up a firewall, skip to Step 3.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo ufw allow OpenSSH
+</code></pre></div><p>Let’s open ports 20 and 21 for FTP, and ports 40000-50000 for passive FTP. We’ll also open port 990 for TLS, which we will set up later.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo ufw allow 20/tcp
+sudo ufw allow 21/tcp
+sudo ufw allow 40000:50000/tcp
+sudo ufw allow 990/tcp
+</code></pre></div><p>Now, enable the firewall if it isn’t already. Press <code>y</code> and <code>ENTER</code> if warned about disrupting the SSH connection.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo ufw enable
+</code></pre></div><p>To check the status of the firewall, run:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo ufw status
+</code></pre></div><p>If the firewall is running, you should see <code>Status: active</code> and the firewall rules we just added.</p>
+<pre><code>Status: active
+
+To                         Action      From
+--                         ------      ----
+OpenSSH                    ALLOW       Anywhere
+Apache Full                ALLOW       Anywhere
+3306                       ALLOW       Anywhere
+20/tcp                     ALLOW       Anywhere
+21/tcp                     ALLOW       Anywhere
+40000:50000/tcp            ALLOW       Anywhere
+990/tcp                    ALLOW       Anywhere
+OpenSSH (v6)               ALLOW       Anywhere (v6)
+Apache Full (v6)           ALLOW       Anywhere (v6)
+3306 (v6)                  ALLOW       Anywhere (v6)
+20/tcp (v6)                ALLOW       Anywhere (v6)
+21/tcp (v6)                ALLOW       Anywhere (v6)
+40000:50000/tcp (v6)       ALLOW       Anywhere (v6)
+990/tcp (v6)               ALLOW       Anywhere (v6)
+</code></pre><h2 id="3-create-ftp-user">3. Create FTP User</h2>
+<p>We will now create a new user that we will use to log into FTP. In this example, we will create a new user called <code>ftpuser</code>.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo adduser ftpuser
+</code></pre></div><p><a href="https://passgen.co/">Generate a strong password</a> and keep it safe.</p>
+<p>You may also be asked to enter some contact information. You can just press <code>ENTER</code> to each of these.</p>
+<p>If you only want <code>ftpuser</code> to log in via FTP, you should disable their SSH access by blacklisting their username in the SSH config file. Otherwise, skip to Step 4.</p>
+<p>Open the SSH config in nano.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo nano /etc/ssh/sshd_config
+</code></pre></div><p>Add the following to the bottom of the file replacing <code>ftpuser</code> with the user you want to deny SSH and SFTP access. You can add multiple users here separated by a single space. (To paste in nano, press the right mouse button). /etc/ssh/sshd_config</p>
+<pre><code>DenyUsers ftpuser
+</code></pre><p>To save file and exit, press <code>CTRL</code> + <code>X</code>, press <code>Y</code> and then press <code>ENTER</code>.</p>
+<p>Restart the SSH service.</p>
+<pre><code>sudo service sshd restart
+</code></pre><h2 id="4-directory-permissions">4. Directory Permissions</h2>
+<p>You now need to decide where this new FTP user is allowed to view and upload files.</p>
+<p>vsftpd uses chroot jails to restrict users to their home directories and requires that the home directory is not writable. For that reason, we have to set up some directories and permissions.</p>
+<p>If you plan on using this FTP user account to upload files to a web server, continue to Step 4.1. If you just want to upload to a home folder, skip to Step 4.2.</p>
+<h3 id="method-1-upload-to-a-web-server">Method 1. Upload to a Web Server</h3>
+<p>In many cases, you want to be able to upload files to the document root on the web server.</p>
+<p>If you followed a previous guide here for setting up multiple domains, your document root may be located in somewhere like <code>/var/www/test1.com/public_html</code> – in that case, you would need to set the home folder for <code>ftpuser</code> to the folder <em>above</em> the document root: <code>/var/www/test1.com</code> (substituting test1.com for your own domain).</p>
+<p>If you are <strong>not</strong> using multiple domains, we will assume you are using the default document root <code>/var/www/html</code> for both Apache and Nginx in Ubuntu 20.04. In this scenario, we have to make <code>/var/www/</code> the home directory for our user <code>ftpuser</code>.</p>
+<p>Let’s set the folder <em>above</em> the document root as the home directory for <code>ftpuser</code>.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo usermod -d /var/www ftpuser
+</code></pre></div><p>Now set ownership of the <em>document root</em> directory to <code>ftpuser</code>. (The default is <code>/var/www/html</code>, though it may be <code>/var/www/test1.com/public_html</code> on your server.)</p>
+<p>This will allow our FTP user to write and alter files in the document root directory.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo chown ftpuser:ftpuser /var/www/html
+</code></pre></div><p>Now skip to Step 5 to configure vsftpd.</p>
+<h3 id="method-2-upload-to-a-home-folder">Method 2: Upload to a Home Folder</h3>
+<p>If instead you want this user to upload files to the home directory, create a new directory called <code>ftp</code> in the user’s home directory and another within it called <code>files</code>. In this example below our user is called <code>ftpuser</code>.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo mkdir /home/ftpuser/ftp
+</code></pre></div><p>Set the ownership of the <code>ftp</code> directory to no <code>nobody:nogroup</code>.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo chown nobody:nogroup /home/ftpuser/ftp
+</code></pre></div><p>Set permissions for the <code>ftp</code> directory using <code>chmod</code> so that it is not writable by anyone, otherwise vsftpd will not allow you to log in. <code>a-w</code> means <code>a</code> = <em>all/everyone</em> <code>-</code> = <em>remove</em> <code>w</code> = <em>write permission</em>, so, <em>remove write permissions for everyone</em>.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo chmod a-w /home/ftpuser/ftp
+</code></pre></div><p>Next we will create a new directory within <code>/ftp</code> where the user can view and upload files.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo mkdir /home/ftpuser/ftp/files
+</code></pre></div><p>Assign ownership of this directory to our new FTP user otherwise they will not be able to write to it.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo chown ftpuser:ftpuser /home/ftpuser/ftp/files
+</code></pre></div><h2 id="5-configure-vsftpd">5. Configure vsftpd</h2>
+<p>There are a few changes we have to make to the vsftpd configuration file before you can start using FTP on Ubuntu 20.04.</p>
+<p>Rename the config file.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo mv /etc/vsftpd.conf /etc/vsftpd.conf.bak
+</code></pre></div><p>Create a new config file with <code>nano</code> editor.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo nano /etc/vsftpd.conf
+</code></pre></div><p>Paste in the following:</p>
+<p>/etc/vsftpd.conf</p>
+<pre><code>listen=NO
+listen_ipv6=YES
+anonymous_enable=NO
+local_enable=YES
+write_enable=YES
+local_umask=022
+dirmessage_enable=YES
+use_localtime=YES
+xferlog_enable=YES
+connect_from_port_20=YES
+chroot_local_user=YES
+secure_chroot_dir=/var/run/vsftpd/empty
+pam_service_name=vsftpd
+force_dot_files=YES
+pasv_min_port=40000
+pasv_max_port=50000
+</code></pre><p><strong>If you followed Method 2 previously and only want this user to upload files to the home folder, we must tell vsftpd that the</strong> <code>local_root</code> <strong>is the</strong> <code>/ftp</code> <strong>folder we created earlier.</strong> <strong>Don’t add these two lines if you want the user to upload to the web document root!</strong>.</p>
+<p>etc/vsftpd.conf</p>
+<pre><code>user_sub_token=$USER
+local_root=/home/$USER/ftp
+</code></pre><p>We are done with vsftpd.conf</p>
+<p>To save file and exit, press <code>CTRL</code> + <code>X</code>, press <code>Y</code> and then press <code>ENTER</code>.</p>
+<p>Restart vsftpd.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo systemctl restart vsftpd
+</code></pre></div><h2 id="6-test-ftp">6. Test FTP</h2>
+<p>We can now test vsftpd to see if we can log in as the user we created earlier. We recommend <a href="https://filezilla-project.org/">FileZilla</a>, which works on Windows, Mac and Linux.</p>
+<p>Enter your server’s IP, your FTP username and password you created earlier, and click <strong>Quickconnect</strong>.</p>
+<p><img src="How%20To%20Install%20an%20FTP%20server%20(vsftpd)%20on%20Ubuntu%2020.04.assets/filezilla-quick-connect.png" alt="img" loading="lazy" ></p>
+<p>Above we can see we have connected successfully and the web root directory <code>html</code> is displayed, though this may be different on your server.</p>
+<p>Try uploading, creating and editing folders and files within the web root directory to ensure permissions are working correctly.</p>
+<p>You will notice we have a warning in FileZilla “Status: Insecure server, it does not support FTP over TLS.” It is highly recommended that you now configure TLS so that login credentials and traffic are encrypted over the FTP connection.</p>
+<p>If you are having problems logging in to the FTP server, try checking the vsftpd log. To view the last 200 entries using <code>tail</code>:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo tail /var/log/vsftpd.log -n <span style="color:#ae81ff">200</span>
+</code></pre></div><h2 id="7-secure-ftp-with-tls-recommended">7. Secure FTP with TLS (Recommended)</h2>
+<p>It’s important to keep a few things in mind when using FTP – it is not encrypted by default meaning your credentials and files that you send are vulnerable to interception. To address this you should connect to vsftpd using FTPS (FTP over SSL/TLS).</p>
+<p>Let’s begin by creating a new certificate with the <code>openssl</code> tool.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo openssl req -x509 -nodes -days <span style="color:#ae81ff">365</span> -newkey rsa:2048 -keyout /etc/ssl/private/vsftpd.pem -out /etc/ssl/private/vsftpd.pem
+</code></pre></div><p>You will be asked to enter some details like country, etc. You don’t have to fill these in. You can just press <code>ENTER</code> for defaults.</p>
+<p>Now that your private key has been created, there are a few changes we have to make to the vsftpd configuration file.</p>
+<p>Open the config file in <code>nano</code> editor.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo nano /etc/vsftpd.conf
+</code></pre></div><p>Paste in the following beneath it.</p>
+<p>/etc/vsftpd.conf</p>
+<pre><code>ssl_enable=YES
+rsa_cert_file=/etc/ssl/private/vsftpd.pem
+rsa_private_key_file=/etc/ssl/private/vsftpd.pem
+allow_anon_ssl=NO
+force_local_data_ssl=YES
+force_local_logins_ssl=YES
+ssl_tlsv1=YES
+ssl_sslv2=NO
+ssl_sslv3=NO
+require_ssl_reuse=NO
+ssl_ciphers=HIGH
+</code></pre><p>Save and exit (press <code>CTRL</code> + <code>X</code>, press <code>Y</code> and then press <code>ENTER</code>)</p>
+<p>Restart vsftpd.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo systemctl restart vsftpd
+</code></pre></div><h2 id="8-testing-tls-with-filezilla">8. Testing TLS with FileZilla</h2>
+<p>We can now test TLS. We recommend <a href="https://filezilla-project.org/">FileZilla</a>, which works on Windows, Mac and Linux.</p>
+<p>Enter your server’s IP, your FTP username and password you created earlier, and click <strong>Quickconnect</strong>.</p>
+<p>You may be presented with an Unknown Certificate warning. Click <strong>Always trust this certificate in future sessions</strong> and click <strong>OK</strong>.</p>
+<p><img src="How%20To%20Install%20an%20FTP%20server%20(vsftpd)%20on%20Ubuntu%2020.04.assets/filezilla-unknown-certificate.png" alt="img" loading="lazy" ></p>
+<p>If you are connected over TLS, it will tell you in the connection log. You will also see a padlock in the bottom right corner.</p>
+<p><img src="How%20To%20Install%20an%20FTP%20server%20(vsftpd)%20on%20Ubuntu%2020.04.assets/filezilla-tls.png" alt="img" loading="lazy" ></p>
+<p>You’re all done!</p>
+
+    </div>
+
+    <div class="post-copyright">
+            
+            <p class="copyright-item">
+                <span>Author:</span>
+                <span>Eriri </span>
+                </p>
+            
+
+            
+            <p class="copyright-item">
+                    <span>Link:</span>
+                    <a href=https://sweetjava.github.io/1/how-to-install-an-ftp-server-vsftpd-on-ubuntu-20.04/>https://sweetjava.github.io/1/how-to-install-an-ftp-server-vsftpd-on-ubuntu-20.04/</span>
+            </p>
+            
+            
+            <p class="copyright-item lincese">
+                本文采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可
+            </p>
+            
+    </div>
+
+
+    <div class="post-tags">
+        
+        <section>
+                <a href="javascript:window.history.back();">back</a></span> ·
+                <span><a href="https://sweetjava.github.io/">home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav">
+        
+        
+        <a href="https://sweetjava.github.io/2018/%E7%BD%91%E8%AF%BE%E6%91%B8%E9%B1%BC%E7%A5%9E%E5%99%A8obs%E8%99%9A%E6%8B%9F%E6%91%84%E5%83%8F%E5%A4%B4/" class="next" rel="next" title="网课摸鱼神器——OBS虚拟摄像头">网课摸鱼神器——OBS虚拟摄像头&nbsp;<i class="iconfont icon-right"></i></a>
+        
+    </div>
+
+    <div class="post-comment">
+        
+            
+                <div id="gitalk-container"></div>
+<link rel="stylesheet" href="https://cdn.bootcss.com/gitalk/1.5.2/gitalk.css">
+<script src="https://cdn.bootcss.com/gitalk/1.5.2/gitalk.min.js"></script>
+<script>
+    const gitalk = new Gitalk({
+
+        clientID: '',
+        clientSecret: '',
+        repo: '',
+        owner: '',
+        admin: [''],
+        id: location.pathname, 
+        distractionFreeMode: false 
+    });
+    (function () {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('gitalk-container').innerHTML = 'Gitalk comments not available by default when the website is previewed locally.';
+            return;
+        }
+        gitalk.render('gitalk-container');
+    })();
+</script>
+
+            
+        
+    </div>
+</article>
+                </div>
+            </main>
+            <footer class="footer">
+    <div class="copyright">
+        &copy;
+        
+        <span itemprop="copyrightYear">2019 - 2021</span>
+        
+        <span class="with-love">
+    	 <i class="iconfont icon-love"></i>
+         </span>
+         
+            <span class="author" itemprop="copyrightHolder"><a href="https://sweetjava.github.io/">Eriri</a> | </span>
+         
+
+         
+		  <span>Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow">Hugo</a> & <a href="https://github.com/Mogeko/Mogege" target="_blank" rel="external nofollow">Mogege</a></span>
+    </div>
+</footer>
+
+
+
+
+
+
+<script defer src="/js/vendor_main.min.js"></script>
+
+
+
+
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/pangu@4.0.7/dist/browser/pangu.min.js" integrity="sha256-j+yj56cdEY2CwkVtGyz18fNybFGpMGJ8JxG3GSyO2+I=" crossorigin="anonymous"></script>
+<script> pangu.spacingPage();</script>
+
+
+
+
+
+        </div>
+    </body>
+</html>
